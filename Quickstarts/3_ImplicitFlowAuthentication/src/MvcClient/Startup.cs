@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace MvcClient
 {
@@ -21,6 +23,11 @@ namespace MvcClient
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
+                    options.Events.OnTicketReceived = context =>
+                    {
+                        Debugger.Break();
+                        return Task.CompletedTask;
+                    };
                     options.SignInScheme = "Cookies";
 
                     options.Authority = "http://localhost:5000";
@@ -28,6 +35,7 @@ namespace MvcClient
 
                     options.ClientId = "mvc";
                     options.SaveTokens = true;
+                    options.Scope.Add("Customer");
                 });
         }
 
@@ -41,10 +49,9 @@ namespace MvcClient
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseStaticFiles();
             app.UseAuthentication();
 
-            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
         }
     }

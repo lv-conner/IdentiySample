@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+using System;
 using IdentityServer4;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +47,17 @@ namespace QuickstartIdentityServer
                         RoleClaimType = "role"
                     };
                 });
+            var authenticationService = services.BuildServiceProvider().GetService<IAuthenticationService>();
+            Console.WriteLine(authenticationService.GetType().FullName);
+
+            var authenticationProviderService = services.BuildServiceProvider().GetService<IAuthenticationHandlerProvider>();
+            Console.WriteLine(authenticationProviderService.GetType().FullName);
+
+            var originService = services.BuildServiceProvider().GetService<AuthenticationService>();
+            var originAuthenticationProviderService = services.BuildServiceProvider().GetService<AuthenticationHandlerProvider>();
+            
+            Console.WriteLine(originService.GetType().FullName);
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

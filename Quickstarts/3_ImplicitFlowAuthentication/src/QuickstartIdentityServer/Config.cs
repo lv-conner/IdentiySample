@@ -14,24 +14,30 @@ namespace QuickstartIdentityServer
         // scopes define the resources in your system
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
-            return new List<IdentityResource>
+            var list = new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("Customer",new List<string>() { "tim" }){
+                Description = "customer info"
+            }
             };
+            return list;
         }
 
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("api1", "My API"),
+                new ApiResource("api2","My API2")
             };
         }
 
         // clients want to access resources (aka scopes)
         public static IEnumerable<Client> GetClients()
         {
+            var secret = new Secret("secret".Sha256());
             // client credentials client
             return new List<Client>
             {
@@ -40,7 +46,7 @@ namespace QuickstartIdentityServer
                     ClientId = "client",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
@@ -53,7 +59,7 @@ namespace QuickstartIdentityServer
                     ClientId = "ro.client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
@@ -66,14 +72,16 @@ namespace QuickstartIdentityServer
                     ClientId = "mvc",
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
-
+                    RequireConsent = true,
                     RedirectUris = { "http://localhost:5002/signin-oidc" },
                     PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
-
+                    AllowAccessTokensViaBrowser = true,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "Customer",
+                        "api1"
                     }
                 }
             };

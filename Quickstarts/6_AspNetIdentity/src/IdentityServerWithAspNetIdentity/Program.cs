@@ -46,6 +46,7 @@ namespace IdentityServerWithAspNetIdentity
                 .CreateLogger();
 
             return WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://localhost:9562")
                     .UseStartup<Startup>()
                     .ConfigureLogging(builder =>
                     {

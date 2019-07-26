@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace MvcClient
 {
@@ -18,7 +19,9 @@ namespace MvcClient
                     options.DefaultScheme = "Cookies";
                     options.DefaultChallengeScheme = "oidc";
                 })
-                .AddCookie("Cookies")
+                .AddCookie("Cookies",options=>
+                {
+                })
                 .AddOpenIdConnect("oidc", options =>
                 {
                     options.SignInScheme = "Cookies";
@@ -34,7 +37,14 @@ namespace MvcClient
                     options.GetClaimsFromUserInfoEndpoint = true;
 
                     options.Scope.Add("api1");
+                    options.Scope.Add("api2");
                     options.Scope.Add("offline_access");
+                    options.Events.OnRemoteFailure = context =>
+                    {
+                        context.HttpContext.Response.Redirect("/");
+                        context.HandleResponse();
+                        return Task.CompletedTask;
+                    };
                 });
         }
 

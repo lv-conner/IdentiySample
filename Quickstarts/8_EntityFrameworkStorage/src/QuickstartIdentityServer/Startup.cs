@@ -17,7 +17,7 @@ namespace QuickstartIdentityServer
         {
             services.AddMvc();
 
-            const string connectionString = @"Data Source=(LocalDb)\MSSQLLocalDB;database=IdentityServer4.Quickstart.EntityFramework-2.0.0;trusted_connection=yes;";
+            const string connectionString = @"Data Source=PRCNMG1L0311;database=IdentityServer4.Quickstart.EntityFramework-2.0.0;user Id=sa;password=root@Admin";
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             // configure identity server with in-memory stores, keys, clients and scopes

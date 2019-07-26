@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\IdentityServer4.AccessTokenValidation\src\IdentityServer4.AccessTokenValidation\IdentityServer4.AccessTokenValidation.csproj" />
   </ItemGroup>
 
 </Project>
