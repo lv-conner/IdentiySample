@@ -35,7 +35,7 @@ namespace QuickstartIdentityServer
                 //替换客户端存储
                 .AddClientStore<FileClientStore>()
                 //.AddInMemoryClients(Config.GetClients())
-                //替换跟人信息获取提供服务。
+                //替换用户信息获取提供服务。
                 .AddTestUsers(Config.GetUsers())
                 .AddInMemoryPersistedGrants()
                 .AddProfileService<CustomerProfileService>();
