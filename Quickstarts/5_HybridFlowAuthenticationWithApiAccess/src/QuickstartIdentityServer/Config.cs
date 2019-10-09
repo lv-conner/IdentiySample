@@ -71,7 +71,7 @@ namespace QuickstartIdentityServer
                     {
                         new Secret("secret".Sha256())
                     },
-
+                    RequireConsent = false,
                     RedirectUris = { "http://localhost:5002/signin-oidc" },
                     PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
 

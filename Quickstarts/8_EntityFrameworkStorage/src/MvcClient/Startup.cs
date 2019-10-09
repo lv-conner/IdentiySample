@@ -37,7 +37,6 @@ namespace MvcClient
                     options.GetClaimsFromUserInfoEndpoint = true;
 
                     options.Scope.Add("api1");
-                    options.Scope.Add("api2");
                     options.Scope.Add("offline_access");
                     options.Events.OnRemoteFailure = context =>
                     {
